@@ -305,19 +305,17 @@ class CarouselSliderState extends State<CarouselSlider>
   @override
   Widget build(BuildContext context) {
     if (widget.child != null) {
-      return Stack(
-        children: [
-          _page(context),
-          widget.child!(context, pageController),
-        ]
-      );
+      return Stack(children: [
+        _page(context),
+        widget.child!(context, carouselState!.pageController!),
+      ]);
     }
-    
+
     return _page(context);
   }
 
   Widget _page(BuildContext context) {
-    return return getGestureWrapper(PageView.builder(
+    return getGestureWrapper(PageView.builder(
       padEnds: widget.options.padEnds,
       scrollBehavior: ScrollConfiguration.of(context).copyWith(
         scrollbars: false,
