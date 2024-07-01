@@ -7,8 +7,6 @@ import 'carousel_state.dart';
 import 'utils.dart';
 
 abstract class CarouselController {
-  PageController? get pageController;
-
   bool get ready;
 
   Future<Null> get onReady;
@@ -42,9 +40,6 @@ class CarouselControllerImpl implements CarouselController {
 
   void _setModeController() =>
       _state!.changeMode(CarouselPageChangedReason.controller);
-
-  @override
-  PageController? get pageController => _state!.pageController;
 
   @override
   bool get ready => _state != null;

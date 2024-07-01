@@ -35,11 +35,14 @@ class CarouselSlider extends StatefulWidget {
 
   final int? itemCount;
 
+  final Widget Function(BuildContext, PageController)? child;
+
   CarouselSlider(
       {required this.items,
       required this.options,
       this.disableGesture,
       CarouselController? carouselController,
+      this.child,
       Key? key})
       : itemBuilder = null,
         itemCount = items != null ? items.length : 0,
@@ -55,6 +58,7 @@ class CarouselSlider extends StatefulWidget {
       required this.options,
       this.disableGesture,
       CarouselController? carouselController,
+      this.child,
       Key? key})
       : items = null,
         _carouselController = carouselController != null
@@ -300,7 +304,20 @@ class CarouselSliderState extends State<CarouselSlider>
 
   @override
   Widget build(BuildContext context) {
-    return getGestureWrapper(PageView.builder(
+    if (widget.child != null) {
+      return Stack(
+        children: [
+          _page(context),
+          widget.child!(context, pageController),
+        ]
+      );
+    }
+    
+    return _page(context);
+  }
+
+  Widget _page(BuildContext context) {
+    return return getGestureWrapper(PageView.builder(
       padEnds: widget.options.padEnds,
       scrollBehavior: ScrollConfiguration.of(context).copyWith(
         scrollbars: false,
